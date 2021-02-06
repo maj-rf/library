@@ -3,22 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles/style.css" rel="stylesheet">
     <title>Library App</title>
 </head>
 <body>
     <div class="main-container">
+        <div class="description">
+        <h1>My Book Library</h1>
+
+        </div>
         <div class="addbook">
             <form id="book-form">
-                Add new book:
-                <p><input placeholder="Title.." id="title" value=""></p>
-                <p><input placeholder="Author.." id="author" value=""></p>
-                <p><input placeholder="Pages.." id="pages" value=""></p>
-                <p><input placeholder="Reading Status.." id="read-status" value=""></p>
-                <p><input type="submit" value="Add"></p>
-                </form>
+                <label>Title:<input type="text" placeholder="Romeo and Juliet.." id="title" value=""></label>
+                <label>Author:<input type="text" placeholder="William Shakespeare.." id="author" value=""></label>
+                <label>No. of Pages:<input type="text" placeholder="252.." id="pages" value=""></label>
+                <label>Reading Status:<input type="text" placeholder="Read/Unread.." id="read-status" value=""></label>
+                <label><input type="submit" id="submit-button" value="Submit Book"></l>
+            </form>
         </div>
         <div class="display"></div>
     </div>
+
+    <footer class="footer">
+        <div class="footer-desc">
+            <p>Developed by bananabread08</p>
+        </div>
+        <div class="links">
+        <a href="#"> Github Repository</a>
+        <div></div>
+    </footer>
     <script src ="scripts/library.js"></script>
 </body>
 </html>
