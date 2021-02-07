@@ -9,19 +9,41 @@
 <body>
     <div class="main-container">
         <div class="description">
-        <h1>My Book Library</h1>
+        <h1>Libro App</h1>
 
         </div>
-        <div class="addbook">
+        <div class="form-popup" id="addbook">
             <form id="book-form">
-                <label>Title:<input type="text" placeholder="Romeo and Juliet.." id="title" value=""></label>
-                <label>Author:<input type="text" placeholder="William Shakespeare.." id="author" value=""></label>
-                <label>No. of Pages:<input type="text" placeholder="252.." id="pages" value=""></label>
-                <label>Reading Status:<input type="text" placeholder="Read/Unread.." id="read-status" value=""></label>
-                <label><input type="submit" id="submit-button" value="Submit Book"></l>
+                <div class="form-input">
+                    <label>Title</label>
+                    <input type="text" placeholder="Romeo and Juliet.." id="title">
+                </div>
+                <div class="form-input">
+                    <label>Author:</label>
+                    <input type="text" placeholder="William Shakespeare.." id="author">
+                </div>
+                <div class="form-input">
+                    <label>No. of Pages:</label>
+                    <input type="text" placeholder="252.." id="pages">
+                </div>
+                <div class="form-input">
+                    <label>Reading Status:</label>
+                    <input type="checkbox" placeholder="Read/Unread.." id="read-status">
+                </div>
+                <input type="submit" id="submit-button" value="Add Book">
             </form>
         </div>
-        <div class="display"></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Pages</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="book-list"></tbody>
+        </table>
     </div>
 
     <footer class="footer">

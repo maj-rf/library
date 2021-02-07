@@ -6,6 +6,21 @@ html,body{
     font-family: 'Quicksand', 'Roboto', sans-serif;
 }
 
+
+.form-input{
+    display: inline-block;
+}
+
+table {
+    margin-top: 20px;
+    width: auto;
+}
+
+table th{
+    padding-right: 200px;
+}
+
+
 #submit-button{
     width: 150px;
     height: 36px;

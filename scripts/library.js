@@ -7,25 +7,44 @@ function Book(title, author, pages, readStatus){ //constructor
     this.readStatus = readStatus;
 }
 
-Book.prototype.info = function(){
-    //display.appendChild(newlyAdded);
-    return `${this.title} by ${this.author}, ${this.pages}, ${this.readStatus}`;
+function addBooks(book){
+    myLibrary.push(book);
 }
 
-function addBooks(e){
+function displayBooks(myLib){
+    const bookList = document.querySelector("#book-list");
+    newlyAdded = document.createElement("tr");
+    myLib.forEach(books =>{ //create a row for every books object
+        newlyAdded.innerHTML = `
+        <td>${books.title}</td>
+        <td>${books.author}</td>
+        <td>${books.pages}</td>
+        <td>${books.readStatus}</td>
+        <td><button class="delete" id="remove"> Remove </button></td>
+        `;
+        bookList.appendChild(newlyAdded);
+        // const remove = document.querySelector("#remove");
+        // remove.addEventListener(function(){
+        }
+        });
+
+}
+
+const form = document.getElementById("book-form");
+
+form.addEventListener("submit", function(e){
     e.preventDefault();
-    newlyAdded = document.createElement("p");
-    const newBook = new Book(inputs.item(0).value, inputs.item(1).value, inputs.item(2).value, inputs.item(3).value);
-    myLibrary.push(newBook);
-    newlyAdded.textContent = newBook.info();
-    display.appendChild(newlyAdded);
-    form.reset();
-}
+    const title = document.getElementById("title").value; //get values
+    const author = document.getElementById("author").value;
+    const pages = document.getElementById("pages").value;
+    const status = document.getElementById("read-status").value;
 
-//const book1 = new Book("Noli Me Tangere", "Dr. Jose P. Rizal", 300, "Unread");
-const form = document.forms[0];
-const inputs = form.querySelectorAll("input");
-const display = document.querySelector(".display");
+    const newBook = new Book(title, author, pages, status); //create new Books using the constructor
+    addBooks(newBook); //add Books to Library
+    displayBooks(myLibrary); // display all books from Library
 
-form.addEventListener("submit", addBooks);
+    form.reset(); //reset text fields
+});
+
+
 
