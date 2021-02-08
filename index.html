@@ -10,27 +10,23 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="description">
-        <h1>Libro App</h1>
-
-        </div>
+        <header class="description">
+            <h1>Library App</h1>
+        </header>
         <button class="open-button" onclick="openForm()">Add Book</button>
         <div class="form-popup" id="addbook">
             <form id="book-form" class="form-container">
                 <div class="form-input">
-                    <label>Title:</label>
-                    <input type="text" placeholder="Romeo and Juliet.." id="title">
+                    <input type="text" placeholder="Title.." id="title">
                 </div>
                 <div class="form-input">
-                    <label>Author:</label>
-                    <input type="text" placeholder="William Shakespeare.." id="author">
+                    <input type="text" placeholder="Author" id="author">
                 </div>
                 <div class="form-input">
-                    <label>No. of Pages:</label>
-                    <input type="text" placeholder="252.." id="pages">
+                    <input type="text" placeholder="Pages" id="pages">
                 </div>
                 <div class="form-input">
-                    <label>Read?:</label>
+                    <label>Status:</label>
                     <select name="status" id="read-status">
                         <option value="Read">Read</option>
                         <option value="Unread">Unread</option>
