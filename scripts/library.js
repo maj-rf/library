@@ -17,6 +17,11 @@ function addBooks(e){
     const author = document.getElementById("author").value;
     const pages = document.getElementById("pages").value;
     const status = document.getElementById("read-status").value;
+
+    if (title.length === 0 || author.length === 0 || pages.length === 0) {
+        alert("Please, fill all the fields");
+        return;
+    }
     const newBook = new Book(title, author, pages, status); //create new Books using the constructor
     myLibrary.push(newBook); //add books to array
     displayBooks(myLibrary); // display all books from array
@@ -24,37 +29,33 @@ function addBooks(e){
 }
 
 function displayBooks(myLib){
-    newlyAdded = document.createElement("tr");
+    let newDisplay = document.createElement("tr");
+    newDisplay.classList.add("newbook");
     myLib.forEach(books =>{ //create a row for every books object
-        newlyAdded.innerHTML = `
+        newDisplay.innerHTML = `
         <td>${books.title}</td>
         <td>${books.author}</td>
         <td>${books.pages}</td>
-        <td><button class="toggle" id="rstatus">${books.readStatus}</button></td>
+        <td><button class="toggle">${books.readStatus}</button></td>
         <td><button class="delete" id="remove"> Remove </button></td>
         `;
-        bookList.appendChild(newlyAdded);
+        bookList.appendChild(newDisplay);
         });
 
 }
 
 function updateBook(e){
-    console.log(e.target);
     const item = e.target;
+    let itemcont = item.parentElement;
     if(item.classList[0] === "delete"){
-        const itemcont = item.parentElement;
         itemcont.parentElement.remove();
     }
-    if(item.classList[0] === "toggle"){ //toggle not working atm
-        const itemcont2 = item.parentElement;
-        if(itemcont2.value = "Read"){
-            itemcont2.innerHTML= `<td><button class="toggle" id="rstatus">Unread</button></td>`;
-            itemcont2.value = "Unread";
-        }
-        else if(itemcont2.value = "Unread"){
-            itemcont2.innerHTML= `<td><button class="toggle" id="rstatus">Read</button></td>`;
-            itemcont2.value = "Read";
-        }
+    
+    if(item.classList.contains("toggle") &&(itemcont.value = "Unread")){ //toggle not working atm (hint: Book.readStatus unchanged)
+        itemcont.innerHTML= `<td><button class="toggle" value="Read">Read</button></td>`;
+    }
+    if(item.classList.contains("toggle") && (itemcont.value = "Read")){    
+        itemcont.innerHTML= `<td><button class="toggle" value="Unread">Unread</button></td>`;
     }
 }
 

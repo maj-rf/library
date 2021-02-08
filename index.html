@@ -12,10 +12,10 @@
     <div class="main-container">
         <header class="description">
             <h1>Library App</h1>
+        <button class="open-button" onclick="openForm()">New Book</button>
         </header>
-        <button class="open-button" onclick="openForm()">Add Book</button>
         <div class="form-popup" id="addbook">
-            <form id="book-form" class="form-container">
+            <form class="form-container" id="book-form" >
                 <div class="form-input">
                     <input type="text" placeholder="Title.." id="title">
                 </div>
@@ -30,7 +30,7 @@
                     <select name="status" id="read-status">
                         <option value="Read">Read</option>
                         <option value="Unread">Unread</option>
-                      </select>
+                    </select>
                 </div>
                 <div class="form-input"> 
                     <input type="submit" id="submit-button" value="Submit">
@@ -38,7 +38,7 @@
                 <input type="button" class="btn cancel" value="Close Form"onclick="closeForm()">
             </form>
         </div>
-        <table class="table">
+        <table class="table" border=1 frame=hsides rules=rows>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -56,8 +56,8 @@
             <p>Developed by bananabread08</p>
         </div>
         <div class="links">
-        <a href="#"> Github Repository</a>
-        <div></div>
+        <a href="https://github.com/bananabread08/library"> Github Repository</a>
+        </div>
     </footer>
     <script src ="scripts/library.js"></script>
 </body>

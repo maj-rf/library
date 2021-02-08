@@ -2,20 +2,23 @@ html,body{
     height:100%;
     padding:0;
     margin:0;
-    overflow: hidden;
+    overflow: scroll;
     font-family: Open Sans, serif;
 }
 
 header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 1.0rem;
     text-align: center;
 }
 
-/* Button used to open the contact form - fixed at the bottom of the page */
-.open-button {
-    position: fixed;
-    left: 40%;
-    margin-top: 10px;
+body{
+    background-image: linear-gradient(120deg, rgb(80, 176, 231), rgb(178, 133, 250));
+}
+
+.open-button { /* Button used to open the contact form - fixed at the bottom of the page */
     width: 280px;
     height: 50px;
     background-color:#1c89ff;
@@ -26,56 +29,68 @@ header{
     border-radius: 18px;
     cursor: pointer;
     opacity: 0.8;
-    
 }
 
-/* The popup form - hidden by default */
-.form-popup {
+.open-button:hover{
+    background-color: rgb(221, 223, 131);
+    color: black;
+}
+
+
+.form-popup { /* The popup form - hidden by default */
     display: none;
-    position: fixed;
-    left: 40%;
-    border: 4px solid rgb(207, 202, 204);
-    font-size: 18px;
+    position:fixed;
+    left: 25%;
+    right: 25%;
+    width: 50%;
+    border: 3px solid rgb(207, 202, 204);
+    font-size: 20px;
     z-index: 1;
 }
 
-/* Add styles to the form container */
-.form-container {
+
+.form-container { /* Add styles to the form container */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    width: 300px;
-    height: 300px;
     background-color: rgba(0, 0, 0, 0.459);
 }
 
-/* nput fields */
 .form-container input[type=text]{
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
+    margin: 5px 15px 22px 0;
+    border: none;
+    background: #f1f1f1;
+    padding: 10px;
+    width: 250px;
 }
 
-/* When the inputs get focus, do something */
 .form-container input[type=text]:focus{
   background-color: rgb(255, 253, 253);
   outline: none;
 }
 
-/* k */
-
-
 table {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+label{
+    color: white;
 }
 
 table th{
-    padding-right: 200px;
+    padding: 10px;
 }
 
+hr.line{
+    border-top: 3px solid #999; 
+    width: 500px;
+}
+
+td{
+    padding: 10px;
+}
 
 #submit-button, .form-container .cancel{
     width: 100px;
@@ -91,16 +106,11 @@ table th{
 }
 
 #submit-button:hover, .form-container .cancel:hover{
-    background-color: teal;
+    background-color: rgb(221, 223, 131);
     border-color: #fff;
     transition: all .1s ease-in-out;
     color: black;
-}
-
-input[type=text]{
-    padding: 10px;
-    margin-left: 5px;
-}
+}   
 
 button.delete{
     background-color: red;
