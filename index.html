@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> 
     <link href="styles/style.css" rel="stylesheet">
     <title>Library App</title>
 </head>
@@ -12,10 +14,11 @@
         <h1>Libro App</h1>
 
         </div>
+        <button class="open-button" onclick="openForm()">Add Book</button>
         <div class="form-popup" id="addbook">
-            <form id="book-form">
+            <form id="book-form" class="form-container">
                 <div class="form-input">
-                    <label>Title</label>
+                    <label>Title:</label>
                     <input type="text" placeholder="Romeo and Juliet.." id="title">
                 </div>
                 <div class="form-input">
@@ -27,10 +30,16 @@
                     <input type="text" placeholder="252.." id="pages">
                 </div>
                 <div class="form-input">
-                    <label>Reading Status:</label>
-                    <input type="checkbox" placeholder="Read/Unread.." id="read-status">
+                    <label>Read?:</label>
+                    <select name="status" id="read-status">
+                        <option value="Read">Read</option>
+                        <option value="Unread">Unread</option>
+                      </select>
                 </div>
-                <input type="submit" id="submit-button" value="Add Book">
+                <div class="form-input"> 
+                    <input type="submit" id="submit-button" value="Submit">
+                </div>
+                <input type="button" class="btn cancel" value="Close Form"onclick="closeForm()">
             </form>
         </div>
         <table class="table">

@@ -1,5 +1,9 @@
+//variables
 let myLibrary = [];
+const form = document.getElementById("book-form");
 
+
+//functions
 function Book(title, author, pages, readStatus){ //constructor
     this.title = title;
     this.author = author;
@@ -25,13 +29,21 @@ function displayBooks(myLib){
         bookList.appendChild(newlyAdded);
         // const remove = document.querySelector("#remove");
         // remove.addEventListener(function(){
-        }
+        //}
         });
 
 }
 
-const form = document.getElementById("book-form");
+function openForm() {
+    document.getElementById("addbook").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("addbook").style.display = "none";
+  }
 
+
+//events
 form.addEventListener("submit", function(e){
     e.preventDefault();
     const title = document.getElementById("title").value; //get values
