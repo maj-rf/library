@@ -36,26 +36,44 @@ function displayBooks(myLib){
         <td>${books.title}</td>
         <td>${books.author}</td>
         <td>${books.pages}</td>
-        <td><button class="toggle">${books.readStatus}</button></td>
+        <td><button class="toggle" id="rstatus" value="${books.readStatus}">${books.readStatus}</button></td>
         <td><button class="delete" id="remove"> Remove </button></td>
         `;
         bookList.appendChild(newDisplay);
         });
-
 }
+
+function searchBook(myLib, name){
+    console.log(name);
+        if (myLib.length === 0 || myLib === null) {
+          return;
+        }
+        else{
+        for (book of myLib)
+          if (book.title === name) {
+            return myLib.indexOf(book);
+          }
+    }
+}
+
+function toggleRead(book){
+    if (myLibrary[book].readStatus === "Read") {
+        return myLibrary[book].readStatus = "Unread";
+      } 
+    else return myLibrary[book].readStatus = "Read";
+    }
 
 function updateBook(e){
     const item = e.target;
+    const currentitem = e.target.parentElement.parentElement.parentElement.childNodes[0];
+    let currentitemArr = currentitem.innerText.split("\t");
     let itemcont = item.parentElement;
     if(item.classList[0] === "delete"){
         itemcont.parentElement.remove();
     }
-    
-    if(item.classList.contains("toggle") &&(itemcont.value = "Unread")){ //toggle not working atm (hint: Book.readStatus unchanged)
-        itemcont.innerHTML= `<td><button class="toggle" value="Read">Read</button></td>`;
-    }
-    if(item.classList.contains("toggle") && (itemcont.value = "Read")){    
-        itemcont.innerHTML= `<td><button class="toggle" value="Unread">Unread</button></td>`;
+
+    if(item.classList.contains("toggle")){
+        e.target.textContent= `${toggleRead(searchBook(myLibrary, currentitemArr[0]))}`;
     }
 }
 

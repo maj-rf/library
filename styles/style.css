@@ -42,7 +42,7 @@ body{
     position:fixed;
     left: 25%;
     right: 25%;
-    width: 50%;
+    width: auto;
     border: 3px solid rgb(207, 202, 204);
     font-size: 20px;
     z-index: 1;
@@ -53,6 +53,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: auto;
     background-color: rgba(0, 0, 0, 0.459);
 }
 
