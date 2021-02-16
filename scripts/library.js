@@ -4,12 +4,15 @@ const form = document.getElementById("book-form");
 const bookList = document.querySelector("#book-list");
 
 //functions
-function Book(title, author, pages, readStatus){ //constructor
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.readStatus = readStatus;
+class Book {
+    constructor(title, author, pages, readStatus){ //constructor
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = readStatus;
+    }
 }
+
 
 function addBooks(e){
     e.preventDefault();
