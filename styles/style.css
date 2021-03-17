@@ -1,24 +1,20 @@
-html,body{
-    height:100%;
-    padding:0;
-    margin:0;
-    overflow: auto;
-    font-family: Open Sans, serif;
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: #f1f1f1;
 }
-
+* {
+    box-sizing: border-box;
+}
 header{
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 1.0rem;
-    text-align: center;
 }
-
-body{
-    background-image: linear-gradient(120deg, rgb(80, 176, 231), rgb(178, 133, 250));
-}
-
-.open-button { /* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
     width: 280px;
     height: 50px;
     background-color:#1c89ff;
@@ -30,69 +26,46 @@ body{
     cursor: pointer;
     opacity: 0.8;
 }
-
 .open-button:hover{
     background-color: rgb(221, 223, 131);
     color: black;
 }
-
-
 .form-popup { /* The popup form - hidden by default */
     display: none;
-    position:fixed;
-    left: 25%;
-    right: 25%;
-    width: auto;
+    position:absolute;
+    width: 280px;
+    height: 60%;
     border: 3px solid rgb(207, 202, 204);
     font-size: 20px;
     z-index: 1;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
-
-
 .form-container { /* Add styles to the form container */
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: auto;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.459);
 }
-
 .form-container input[type=text]{
     margin: 5px 15px 22px 0;
     border: none;
     background: #f1f1f1;
     padding: 10px;
-    width: 250px;
+    width: auto;
+    border-radius: 5px;
 }
-
 .form-container input[type=text]:focus{
   background-color: rgb(255, 253, 253);
-  outline: none;
+  border: 2px solid rgb(12, 137, 153);
 }
-
-table {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-}
-
-label{
-    color: white;
-}
-
-table th{
-    padding: 10px;
-}
-
-hr.line{
-    border-top: 3px solid #999; 
-    width: 500px;
-}
-
-td{
-    padding: 10px;
-}
-
 #submit-button, .form-container .cancel{
     width: 100px;
     height: 20px;
@@ -105,28 +78,47 @@ td{
     font-weight: 300;
     transition: all .1s ease-in-out;
 }
-
 #submit-button:hover, .form-container .cancel:hover{
     background-color: rgb(221, 223, 131);
     border-color: #fff;
     transition: all .1s ease-in-out;
     color: black;
-}   
-
-button.delete{
+}  
+.book-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center; 
+}
+.book{
+    background-color: #bababa;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    width: 175px;
+    height: 175px;
+    font-size: 14px;
+    position: relative;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.53)
+}
+.book .delete{
+    position: absolute;
+    top: 0;
+    right: 0;
     background-color: red;
+    opacity: 0.6;
     color: white;
-    border-radius: 18px;
-    border: solid 1px transparent;
+    border: none;
     cursor: pointer;
-    font-weight: 300;
-    transition: all .1s ease-in-out;
+    border-radius: 100%;
 }
-
-button.delete:hover{
-    background-color: rgb(250, 113, 113);
+.book .delete:hover{
+    opacity: 0.9;
 }
-
+.book div{
+    font-size: 18px;
+} 
 .footer {
     position: fixed;
     left: 0;
@@ -136,13 +128,11 @@ button.delete:hover{
     color: white;
     text-align: center;
 }
-
 .footer-desc{
     float: left;
     margin-left: 10px;
     text-align: center;
 }
-
 .links{
     padding-top: 15px;
     padding-right: 20px;

@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> 
     <link href="styles/style.css" rel="stylesheet">
     <title>Library App</title>
+    <script src="https://kit.fontawesome.com/dbf95a1966.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="main-container">
         <header class="description">
-            <h1>Library App</h1>
-        <button class="open-button" onclick="openForm()">New Book</button>
+            <h1><i class="fas fa-book"></i>LibraryApp</h1>
+        <button class="open-button" onclick="openForm()"><i class="fas fa-plus"></i> New Book</button>
         </header>
         <div class="form-popup" id="addbook">
             <form class="form-container" id="book-form" >
@@ -26,11 +27,8 @@
                     <input type="text" placeholder="Pages" id="pages">
                 </div>
                 <div class="form-input">
-                    <label>Status:</label>
-                    <select name="status" id="read-status">
-                        <option value="Read">Read</option>
-                        <option value="Unread">Unread</option>
-                    </select>
+                    <input type="checkbox" name = "read-status" id= "read-status">
+                    <label for="read-status">Done Reading?</label>
                 </div>
                 <div class="form-input"> 
                     <input type="submit" id="submit-button" value="Submit">
@@ -38,17 +36,8 @@
                 <input type="button" class="btn cancel" value="Close Form"onclick="closeForm()">
             </form>
         </div>
-        <table class="table" border=1 frame=hsides rules=rows>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Pages</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="book-list"></tbody>
-        </table>
+        <div class="book-list">
+        </div>
     </div>
 
     <footer class="footer">
@@ -56,7 +45,7 @@
             <p>Developed by bananabread08</p>
         </div>
         <div class="links">
-        <a href="https://github.com/bananabread08/library"> Github Repository</a>
+        <a href="https://github.com/bananabread08/library"><i class ="fab fa-github icon-large"></i></a>
         </div>
     </footer>
     <script src ="scripts/library.js"></script>

@@ -1,93 +1,91 @@
-//variables
-let myLibrary = [];
-const form = document.getElementById("book-form");
-const bookList = document.querySelector("#book-list");
-
-//functions
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-unused-vars */
 class Book {
-    constructor(title, author, pages, readStatus){ //constructor
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.readStatus = readStatus;
-    }
+  constructor(title, author, pages, readStatus) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.readStatus = readStatus;
+    this.id = title.slice(0, 3).toLowerCase() + pages;
+  }
 }
 
+const myLibrary = [];
+const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
+const form = document.getElementById('book-form');
+const bookList = document.querySelector('.book-list');
 
-function addBooks(e){
-    e.preventDefault();
-    const title = document.getElementById("title").value; //get values
-    const author = document.getElementById("author").value;
-    const pages = document.getElementById("pages").value;
-    const status = document.getElementById("read-status").value;
-
-    if (title.length === 0 || author.length === 0 || pages.length === 0) {
-        alert("Please, fill all the fields");
-        return;
-    }
-    const newBook = new Book(title, author, pages, status); //create new Books using the constructor
-    myLibrary.push(newBook); //add books to array
-    displayBooks(myLibrary); // display all books from array
-    form.reset(); //reset text fields
-}
-
-function displayBooks(myLib){
-    let newDisplay = document.createElement("tr");
-    newDisplay.classList.add("newbook");
-    myLib.forEach(books =>{ //create a row for every books object
-        newDisplay.innerHTML = `
-        <td>${books.title}</td>
-        <td>${books.author}</td>
-        <td>${books.pages}</td>
-        <td><button class="toggle" id="rstatus" value="${books.readStatus}">${books.readStatus}</button></td>
-        <td><button class="delete" id="remove"> Remove </button></td>
+function renderLibrary(currentLibrary) {
+  let checker;
+  const newDisplay = document.createElement('div');
+  newDisplay.classList.add('book');
+  currentLibrary.forEach((book) => {
+    if (book.readStatus === false) checker = 'unchecked';
+    else checker = 'checked';
+    newDisplay.setAttribute('id', `${book.id}`);
+    newDisplay.innerHTML = `
+        <h3>${book.title}</h3>
+        <div>by ${book.author}</div>
+        <div>${book.pages} pages</div>
+        <div>
+          <input type="checkbox" name="read-status" class="toggle" ${checker}>
+          <label for="read-status">I've Read This?</label>
+        </div>
+        <button class="delete" id="remove"> X </button>
         `;
-        bookList.appendChild(newDisplay);
-        });
+    bookList.appendChild(newDisplay);
+  });
+}
+function addBooks(e) {
+  e.preventDefault();
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+  const pages = document.getElementById('pages').value;
+  const status = document.getElementById('read-status').checked;
+
+  if (title.length === 0 || author.length === 0 || pages.length === 0) {
+    alert('Please, fill all the fields');
+    return;
+  }
+  const newBook = new Book(title, author, pages, status);
+  myLibrary.push(newBook);
+  renderLibrary(myLibrary);
+  form.reset();
 }
 
-function searchBook(myLib, name){
-    console.log(name);
-        if (myLib.length === 0 || myLib === null) {
-          return;
-        }
-        else{
-        for (book of myLib)
-          if (book.title === name) {
-            return myLib.indexOf(book);
-          }
-    }
+// eslint-disable-next-line consistent-return
+function searchBook(myLib, id) {
+  for (const book of myLib) {
+    if (book.id === id) return myLib.indexOf(book);
+  }
 }
 
-function toggleRead(book){
-    if (myLibrary[book].readStatus === "Read") {
-        return myLibrary[book].readStatus = "Unread";
-      } 
-    else return myLibrary[book].readStatus = "Read";
+function updateLibrary(e) {
+  const item = e.target;
+  if (item.classList[0] === 'delete') {
+    myLibrary.splice(searchBook(myLibrary, item.parentElement.id), 1);
+    item.parentElement.remove();
+  } else if (item.classList[0] === ('toggle')) {
+    if (myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus
+     === false) {
+      myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus = true;
+      console.log(myLibrary);
+    } else if (myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus
+     === true) {
+      myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus = false;
     }
-
-function updateBook(e){
-    const item = e.target;
-    const currentitem = e.target.parentElement.parentElement.parentElement.childNodes[0];
-    let currentitemArr = currentitem.innerText.split("\t");
-    let itemcont = item.parentElement;
-    if(item.classList[0] === "delete"){
-        itemcont.parentElement.remove();
-    }
-
-    if(item.classList.contains("toggle")){
-        e.target.textContent= `${toggleRead(searchBook(myLibrary, currentitemArr[0]))}`;
-    }
+  }
 }
 
 function openForm() {
-    document.getElementById("addbook").style.display = "block";
-}
-  
-function closeForm() {
-    document.getElementById("addbook").style.display = "none";
+  document.getElementById('addbook').style.display = 'block';
 }
 
-//events
-form.addEventListener("submit", addBooks);
-bookList.addEventListener("click", updateBook);
+function closeForm() {
+  document.getElementById('addbook').style.display = 'none';
+}
+
+myLibrary.push(defaultBook);
+renderLibrary(myLibrary);
+form.addEventListener('submit', addBooks);
+bookList.addEventListener('click', updateLibrary);
