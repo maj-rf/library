@@ -9,7 +9,7 @@ class Book {
     this.id = title.slice(0, 3).toLowerCase() + pages;
   }
 }
-
+// const LOCAL_STORAGE_LIBRARY_KEY = 'myLibrary';
 const myLibrary = [];
 const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
 const form = document.getElementById('book-form');
@@ -69,10 +69,11 @@ function updateLibrary(e) {
     if (myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus
      === false) {
       myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus = true;
-      console.log(myLibrary);
+      item.parentElement.parentElement.classList.remove('done');
     } else if (myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus
      === true) {
       myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus = false;
+      item.parentElement.parentElement.classList.add('done');
     }
   }
 }

@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Lato', sans-serif;
-    background-color: #f1f1f1;
+    background-color: #f2f3f4;
 }
 * {
     box-sizing: border-box;
@@ -13,6 +13,11 @@ header{
     flex-direction: column;
     align-items: center;
     font-size: 1.0rem;
+}
+header > h1 {
+    background: -webkit-linear-gradient(rgb(189, 189, 152), #1b6dc4);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .open-button {
     width: 280px;
@@ -27,7 +32,7 @@ header{
     opacity: 0.8;
 }
 .open-button:hover{
-    background-color: rgb(221, 223, 131);
+    background-color: #f5c71a;
     color: black;
 }
 .form-popup { /* The popup form - hidden by default */
@@ -79,7 +84,7 @@ header{
     transition: all .1s ease-in-out;
 }
 #submit-button:hover, .form-container .cancel:hover{
-    background-color: rgb(221, 223, 131);
+    background-color: #f5c71a;
     border-color: #fff;
     transition: all .1s ease-in-out;
     color: black;
@@ -91,14 +96,14 @@ header{
     align-items: center; 
 }
 .book{
-    background-color: #bababa;
+    background-color: #ffc;
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
-    text-align: center;
     width: 175px;
     height: 175px;
     font-size: 14px;
+    text-align: center;
     position: relative;
     box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.53)
 }
@@ -111,14 +116,18 @@ header{
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 100%;
+    border-radius: 25%;
+    font-weight: 700;
 }
 .book .delete:hover{
     opacity: 0.9;
 }
 .book div{
     font-size: 18px;
-} 
+}
+.book.done{
+    background-color: #bababa;
+}
 .footer {
     position: fixed;
     left: 0;
