@@ -2,6 +2,8 @@
 
 The Library Project for TOP
 
+[Live Preview here!](https://bananabread08.github.io/library/)
+
 ## Overview
 
 The goal is to showcase what we learned about Objects and Object Constructors by making a Library App.
