@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-unused-vars */
 class Book {
   constructor(title, author, pages, readStatus) {
     this.title = title;
@@ -8,34 +6,33 @@ class Book {
     this.readStatus = readStatus;
     this.id = title.slice(0, 3).toLowerCase() + pages;
   }
+  updateReadStatus(state) {
+    this.readStatus = !state;
+  }
 }
-// const LOCAL_STORAGE_LIBRARY_KEY = 'myLibrary';
+
 const myLibrary = [];
 const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
-const form = document.getElementById('book-form');
+const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
 
 function renderLibrary(currentLibrary) {
-  let checker;
-  const newDisplay = document.createElement('div');
-  newDisplay.classList.add('book');
+  const newBookNode = document.createElement('div');
+  newBookNode.classList.add('book');
+  const checkbox = document.createElement('input');
+  checkbox.setAttribute('type', 'checkbox');
+  const childNode = document.createElement('p');
+  const deleteNode = document.createElement('button');
   currentLibrary.forEach((book) => {
-    if (book.readStatus === false) checker = 'unchecked';
-    else checker = 'checked';
-    newDisplay.setAttribute('id', `${book.id}`);
-    newDisplay.innerHTML = `
-        <h3>${book.title}</h3>
-        <div>by ${book.author}</div>
-        <div>${book.pages} pages</div>
-        <div>
-          <input type="checkbox" name="read-status" class="toggle" ${checker}>
-          <label for="read-status">I've Read This?</label>
-        </div>
-        <button class="delete" id="remove"> X </button>
-        `;
-    bookList.appendChild(newDisplay);
+    childNode.textContent = `${book.title} by ${book.author}, ${book.pages} pages`;
+    checkbox.checked = book.readStatus;
+    deleteNode.textContent = 'x';
+    deleteNode.id = book.id;
+    newBookNode.append(checkbox, childNode, deleteNode);
+    bookList.append(newBookNode);
   });
 }
+
 function addBooks(e) {
   e.preventDefault();
   const title = document.getElementById('title').value;
@@ -53,7 +50,6 @@ function addBooks(e) {
   form.reset();
 }
 
-// eslint-disable-next-line consistent-return
 function searchBook(myLib, id) {
   for (const book of myLib) {
     if (book.id === id) return myLib.indexOf(book);
@@ -61,29 +57,15 @@ function searchBook(myLib, id) {
 }
 
 function updateLibrary(e) {
-  const item = e.target;
-  if (item.classList[0] === 'delete') {
-    myLibrary.splice(searchBook(myLibrary, item.parentElement.id), 1);
-    item.parentElement.remove();
-  } else if (item.classList[0] === ('toggle')) {
-    if (myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus
-     === false) {
-      myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus = true;
-      item.parentElement.parentElement.classList.remove('done');
-    } else if (myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus
-     === true) {
-      myLibrary[searchBook(myLibrary, item.parentElement.parentElement.id)].readStatus = false;
-      item.parentElement.parentElement.classList.add('done');
-    }
-  }
+  console.log(e.target.id);
 }
 
 function openForm() {
-  document.getElementById('addbook').style.display = 'block';
+  document.querySelector('.modal-container').style.display = 'flex';
 }
 
 function closeForm() {
-  document.getElementById('addbook').style.display = 'none';
+  document.querySelector('.modal-container').style.display = 'none';
 }
 
 myLibrary.push(defaultBook);
