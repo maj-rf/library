@@ -46,21 +46,42 @@ ul {
   align-items: center;
 }
 
+@mixin action-btns {
+  background-color: #1976d2;
+  padding: 0.5em 1em;
+  border-radius: 20px 20px;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2669ac;
+  }
+}
+
 nav {
   height: 10vh;
   background-color: #fff;
   @include flex-center();
   justify-content: space-around;
-}
+  box-shadow: 0px 15px 10px -15px #111;
 
-.strike {
-  text-decoration: line-through;
-  background-color: rgba(255, 255, 255, 0.5);
-  color: black;
+  h1 {
+    font-size: 35px;
+    font-weight: 900;
+  }
+  .fa-book {
+    margin-right: 0.5em;
+  }
+  .open-button {
+    @include action-btns();
+  }
 }
 
 main {
   padding-bottom: 2em;
+
   .book-list {
     margin-top: 1em;
     text-align: center;
@@ -79,10 +100,37 @@ main {
     border-bottom: 0.1px solid black;
     position: relative;
 
+    &.strike {
+      @extend .book;
+      text-decoration: line-through;
+      background-color: rgba(255, 255, 255, 0.521);
+    }
+
     .name {
       font-weight: 900;
       padding: 1em;
       flex-basis: 70%;
+    }
+
+    .page {
+      flex-basis: 30%;
+    }
+
+    input[type='checkbox'] {
+      cursor: pointer;
+    }
+    button {
+      position: absolute;
+      right: 10px;
+      background-color: rgb(223, 89, 89);
+      color: #fff;
+      height: clamp(17px, 1vh, 1.5rem);
+      width: auto;
+      border: none;
+      cursor: pointer;
+      &:hover {
+        background-color: red;
+      }
     }
   }
 
@@ -126,21 +174,12 @@ form {
 
   #submit-btn,
   .cancel {
-    background-color: #1976d2;
-    padding: 0.5em 1em;
-    border-radius: 5px 5px;
-    border: none;
-    color: #fff;
-    text-transform: uppercase;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #2669ac;
-    }
+    @include action-btns();
   }
 
   .success-msg {
     display: none;
+    color: rgb(77, 182, 77);
   }
 }
 

@@ -54,12 +54,31 @@ nav {
           align-items: center;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  -webkit-box-shadow: 0px 15px 10px -15px #111;
+          box-shadow: 0px 15px 10px -15px #111;
 }
 
-.strike {
-  text-decoration: line-through;
-  background-color: rgba(255, 255, 255, 0.5);
-  color: black;
+nav h1 {
+  font-size: 35px;
+  font-weight: 900;
+}
+
+nav .fa-book {
+  margin-right: 0.5em;
+}
+
+nav .open-button {
+  background-color: #1976d2;
+  padding: 0.5em 1em;
+  border-radius: 20px 20px;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+nav .open-button:hover {
+  background-color: #2669ac;
 }
 
 main {
@@ -71,7 +90,7 @@ main .book-list {
   text-align: center;
 }
 
-main .book {
+main .book, main .book.strike {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -95,11 +114,40 @@ main .book {
   position: relative;
 }
 
+main .strike.book {
+  text-decoration: line-through;
+  background-color: rgba(255, 255, 255, 0.521);
+}
+
 main .book .name {
   font-weight: 900;
   padding: 1em;
   -ms-flex-preferred-size: 70%;
       flex-basis: 70%;
+}
+
+main .book .page {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+}
+
+main .book input[type='checkbox'] {
+  cursor: pointer;
+}
+
+main .book button, main .book.strike button {
+  position: absolute;
+  right: 10px;
+  background-color: #df5959;
+  color: #fff;
+  height: clamp(17px, 1vh, 1.5rem);
+  width: auto;
+  border: none;
+  cursor: pointer;
+}
+
+main .book button:hover {
+  background-color: red;
 }
 
 main .book-checker {
@@ -167,7 +215,7 @@ form #submit-btn,
 form .cancel {
   background-color: #1976d2;
   padding: 0.5em 1em;
-  border-radius: 5px 5px;
+  border-radius: 20px 20px;
   border: none;
   color: #fff;
   text-transform: uppercase;
@@ -181,6 +229,7 @@ form .cancel:hover {
 
 form .success-msg {
   display: none;
+  color: #4db64d;
 }
 
 footer {
@@ -201,7 +250,7 @@ footer {
 }
 
 @media only screen and (min-width: 900px) {
-  main .book {
+  main .book, main .book.strike {
     height: 80px;
     width: 70%;
   }
