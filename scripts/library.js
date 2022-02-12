@@ -6,35 +6,48 @@ class Book {
     this.readStatus = readStatus;
     this.id = title.slice(0, 3).toLowerCase() + pages;
   }
-  updateReadStatus(state) {
-    this.readStatus = !state;
+  updateReadStatus() {
+    this.readStatus = !this.readStatus;
   }
 }
 
-const myLibrary = [];
+let myLibrary = [];
 const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
 
 function renderLibrary(currentLibrary) {
-  const newBookNode = document.createElement('div');
-  newBookNode.classList.add('book');
-  const checkbox = document.createElement('input');
-  checkbox.setAttribute('type', 'checkbox');
-  const childNode = document.createElement('p');
-  const deleteNode = document.createElement('button');
+  while (bookList.firstChild) {
+    bookList.removeChild(bookList.firstChild);
+  }
   currentLibrary.forEach((book) => {
-    childNode.textContent = `${book.title} by ${book.author}, ${book.pages} pages`;
+    const newBookNode = document.createElement('div');
+    const checkbox = document.createElement('input');
+    const nameNode = document.createElement('p');
+    const pageNode = document.createElement('p');
+    const deleteNode = document.createElement('button');
+    newBookNode.classList.add('book');
+    nameNode.classList.add('name');
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.classList.add('book-checker');
+    checkbox.setAttribute('id', book.id);
+    nameNode.textContent = `${book.title} by ${book.author}`;
+    pageNode.textContent = `${book.pages} pages`;
     checkbox.checked = book.readStatus;
     deleteNode.textContent = 'x';
     deleteNode.id = book.id;
-    newBookNode.append(checkbox, childNode, deleteNode);
+    newBookNode.append(checkbox, nameNode, pageNode, deleteNode);
     bookList.append(newBookNode);
   });
+  if (myLibrary.length === 0) {
+    const sign = document.createElement('h3');
+    bookList.append((sign.textContent = 'No Books to show.'));
+  }
 }
 
 function addBooks(e) {
   e.preventDefault();
+  const successNode = document.querySelector('.success-msg');
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
@@ -47,17 +60,22 @@ function addBooks(e) {
   const newBook = new Book(title, author, pages, status);
   myLibrary.push(newBook);
   renderLibrary(myLibrary);
+  successNode.style.display = 'block';
   form.reset();
 }
 
-function searchBook(myLib, id) {
-  for (const book of myLib) {
-    if (book.id === id) return myLib.indexOf(book);
-  }
-}
-
 function updateLibrary(e) {
-  console.log(e.target.id);
+  const elementType = e.target.tagName.toLowerCase();
+  if (elementType === 'button') {
+    myLibrary = myLibrary.filter((book) => book.id !== e.target.id);
+    renderLibrary(myLibrary);
+  }
+  if (elementType === 'input') {
+    for (const book of myLibrary) {
+      if (book.id === e.target.id)
+        myLibrary[myLibrary.indexOf(book)].updateReadStatus();
+    }
+  }
 }
 
 function openForm() {
@@ -68,7 +86,16 @@ function closeForm() {
   document.querySelector('.modal-container').style.display = 'none';
 }
 
+for (let i = 0; i < 15; i++) {
+  myLibrary.push(
+    new Book(`Noli Me Tangere${i}`, 'Dr. Jose Rizal', 123 + `${i}`, true)
+  );
+}
 myLibrary.push(defaultBook);
 renderLibrary(myLibrary);
 form.addEventListener('submit', addBooks);
 bookList.addEventListener('click', updateLibrary);
+
+// if (myLibrary[index].readStatus === false) {
+//   e.target.parentNode.classList.toggle('strike');
+//   console.log(e.target.parentNode);

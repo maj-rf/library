@@ -46,28 +46,65 @@ nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.strike {
+  text-decoration: line-through;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
+main {
+  padding-bottom: 2em;
+}
+
+main .book-list {
+  margin-top: 1em;
+  text-align: center;
 }
 
 main .book {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: #fff;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #fff;
   padding: 0.5em 1em 0.5em 1em;
-  font-size: 12px;
+  font-size: clamp(12px, 2vw, 1.2rem);
   width: 90%;
   margin: 0 auto;
   height: 50px;
+  border-left: 0.5em solid blueviolet;
+  border-bottom: 0.1px solid black;
+  position: relative;
+}
+
+main .book .name {
+  font-weight: 900;
+  padding: 1em;
+  -ms-flex-preferred-size: 70%;
+      flex-basis: 70%;
+}
+
+main .book-checker {
+  position: absolute;
+  left: 0;
 }
 
 .modal-container {
@@ -93,16 +130,16 @@ form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 0.5em;
 }
 
@@ -142,6 +179,10 @@ form .cancel:hover {
   background-color: #2669ac;
 }
 
+form .success-msg {
+  display: none;
+}
+
 footer {
   width: 100%;
   position: fixed;
@@ -156,5 +197,13 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-color: #fff;
+}
+
+@media only screen and (min-width: 900px) {
+  main .book {
+    height: 80px;
+    width: 70%;
+  }
 }
 /*# sourceMappingURL=style.css.map */

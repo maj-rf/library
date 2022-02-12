@@ -27,17 +27,17 @@
     <main>
       <div class="book-list"></div>
     </div>
-
     <div class="modal-container">
       <form class="modal" autocomplete="off" id="my-form">
+        <h2>Add Book</h2>
         <div class="form-input">
           <input type="text" placeholder="Title.." id="title" />
         </div>
         <div class="form-input">
-          <input type="text" placeholder="Author" id="author" />
+          <input type="text" placeholder="Author.." id="author" />
         </div>
         <div class="form-input">
-          <input type="number" placeholder="Pages" id="pages" />
+          <input type="number" placeholder="Pages.." id="pages" />
         </div>
         <div class="form-input">
           <input type="checkbox" name="read-status" id="read-status" />
@@ -54,9 +54,9 @@
             onclick="closeForm()"
           />
         </div>
+        <small class="success-msg">Book added to library!</small>
       </form>
     </div>
-
     <footer class="footer">
       <div class="footer-desc">
         <p>Developed by bananabread08</p>

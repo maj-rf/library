@@ -40,25 +40,55 @@ ul {
   list-style: none;
 }
 
-nav {
-  height: 10vh;
-  background-color: #fff;
+@mixin flex-center {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
+nav {
+  height: 10vh;
+  background-color: #fff;
+  @include flex-center();
+  justify-content: space-around;
+}
+
+.strike {
+  text-decoration: line-through;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
 main {
+  padding-bottom: 2em;
+  .book-list {
+    margin-top: 1em;
+    text-align: center;
+  }
+
   .book {
-    display: flex;
+    @include flex-center();
+    justify-content: space-between;
     background-color: #fff;
-    justify-content: space-around;
-    align-items: center;
     padding: 0.5em 1em 0.5em 1em;
-    font-size: 12px;
+    font-size: clamp(12px, 2vw, 1.2rem);
     width: 90%;
     margin: 0 auto;
     height: 50px;
+    border-left: 0.5em solid blueviolet;
+    border-bottom: 0.1px solid black;
+    position: relative;
+
+    .name {
+      font-weight: 900;
+      padding: 1em;
+      flex-basis: 70%;
+    }
+  }
+
+  .book-checker {
+    position: absolute;
+    left: 0;
   }
 }
 
@@ -78,10 +108,8 @@ form {
   min-width: 350px;
   min-height: 60%;
   background-color: #fff;
-  display: flex;
+  @include flex-center();
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 0.5em;
 
   input[type='text'],
@@ -92,9 +120,7 @@ form {
   }
 
   .btns-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center();
     gap: 0.5em;
   }
 
@@ -112,6 +138,10 @@ form {
       background-color: #2669ac;
     }
   }
+
+  .success-msg {
+    display: none;
+  }
 }
 
 footer {
@@ -119,7 +149,15 @@ footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center();
+  background-color: #fff;
+}
+
+@media only screen and (min-width: 900px) {
+  main {
+    .book {
+      height: 80px;
+      width: 70%;
+    }
+  }
 }
