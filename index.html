@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <title>Library App</title>
+    <script
+      src="https://kit.fontawesome.com/dbf95a1966.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav>
+      <header>
+        <h1><i class="fas fa-book"></i>iLIB</h1>
+      </header>
+      <h2 class="count">Books:</h2>
+      <button class="open-button">
+        <i class="fas fa-plus"></i> New Book
+      </button>
+    </nav>
+    <main>
+      <div class="book-list"></div>
+    </div>
+    <div class="modal-container">
+      <form class="modal" autocomplete="off" id="my-form">
+        <h2>Add Book</h2>
+        <div class="form-input">
+          <input type="text" placeholder="Title.." id="title" />
+        </div>
+        <div class="form-input">
+          <input type="text" placeholder="Author.." id="author" />
+        </div>
+        <div class="form-input">
+          <input type="number" placeholder="Pages.." id="pages" />
+        </div>
+        <div class="form-input">
+          <input type="checkbox" name="read-status" id="read-status" />
+          <label for="read-status">Done Reading?</label>
+        </div>
+        <div class="btns-container">
+          <div class="form-input">
+            <input type="submit" id="submit-btn" value="Submit" form="my-form"/>
+          </div>
+          <input
+            type="button"
+            class="btn cancel"
+            value="Close Form"
+          />
+        </div>
+        <small class="success-msg">Book added to library!</small>
+      </form>
+    </div>
+    <footer class="footer">
+      <div class="footer-desc">
+        <p>Developed by bananabread08</p>
+      </div>
+      <div class="links">
+        <a href="https://github.com/bananabread08/library"
+          ><i class="fab fa-github"></i
+        ></a>
+      </div>
+    </footer>
+    <script src="main.js"></script>
+  </body>
+</html>
