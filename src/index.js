@@ -1,4 +1,57 @@
 import './styles/style.css';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
+} from 'firebase/auth';
+//import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAy1TwID5BplRBJAkuOfVccX_mxXd4O_eg',
+  authDomain: 'ilib-b98ff.firebaseapp.com',
+  databaseURL:
+    'https://ilib-b98ff-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'ilib-b98ff',
+  storageBucket: 'ilib-b98ff.appspot.com',
+  messagingSenderId: '1026965389138',
+  appId: '1:1026965389138:web:b518124d145f7cf668848b',
+  measurementId: 'G-Z3KYF8MBZ8',
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+//const analytics = getAnalytics(app);
+
+// AUTH
+const logInBtn = document.querySelector('.logInBtn');
+const logOutBtn = document.querySelector('.logOutBtn');
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+getRedirectResult(auth)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    console.log(user);
+  })
+  .catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+logInBtn.addEventListener('click', (e) => signInWithRedirect(auth, provider));
 
 class Book {
   constructor(title, author, pages, readStatus) {
@@ -17,7 +70,6 @@ let myLibrary = [];
 const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
-const booksCount = document.querySelector('.count');
 const open = document.querySelector('.open-button');
 const close = document.querySelector('.cancel');
 
@@ -48,7 +100,7 @@ function renderLibrary(currentLibrary) {
     newBookNode.append(checkbox, nameNode, pageNode, deleteNode);
     bookList.append(newBookNode);
   });
-  booksCount.textContent = `Books: ${currentLibrary.length}`;
+  // booksCount.textContent = `Books: ${currentLibrary.length}`;
   if (myLibrary.length === 0) {
     const sign = document.createElement('h3');
     bookList.append((sign.textContent = 'No Books to show.'));

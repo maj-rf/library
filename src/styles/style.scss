@@ -72,15 +72,19 @@ nav {
     font-weight: 900;
   }
   .fa-book {
-    margin-right: 0.5em;
-  }
-  .open-button {
-    @include action-btns();
+    margin-right: 0.2em;
   }
 }
 
 main {
   padding-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  .open-button {
+    @include action-btns();
+    align-self: center;
+    margin-top: 1em;
+  }
 
   .book-list {
     margin-top: 1em;

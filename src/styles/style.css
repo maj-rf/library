@@ -64,10 +64,21 @@ nav h1 {
 }
 
 nav .fa-book {
-  margin-right: 0.5em;
+  margin-right: 0.2em;
 }
 
-nav .open-button {
+main {
+  padding-bottom: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main .open-button {
   background-color: #1976d2;
   padding: 0.5em 1em;
   border-radius: 20px 20px;
@@ -75,14 +86,14 @@ nav .open-button {
   color: #fff;
   text-transform: uppercase;
   cursor: pointer;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin-top: 1em;
 }
 
-nav .open-button:hover {
+main .open-button:hover {
   background-color: #2669ac;
-}
-
-main {
-  padding-bottom: 2em;
 }
 
 main .book-list {
