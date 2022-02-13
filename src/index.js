@@ -1,3 +1,5 @@
+import './styles/style.css';
+
 class Book {
   constructor(title, author, pages, readStatus) {
     this.title = title;
@@ -16,6 +18,8 @@ const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
 const booksCount = document.querySelector('.count');
+const open = document.querySelector('.open-button');
+const close = document.querySelector('.cancel');
 
 function renderLibrary(currentLibrary) {
   while (bookList.firstChild) {
@@ -105,3 +109,5 @@ form.addEventListener(
   () => (document.querySelector('.success-msg').style.display = 'none')
 );
 bookList.addEventListener('click', updateLibrary);
+open.addEventListener('click', openForm);
+close.addEventListener('click', closeForm);

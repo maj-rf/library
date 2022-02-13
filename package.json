@@ -1,0 +1,30 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "The Library Project for TOP",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "watch": "webpack --watch",
+    "start": "webpack --config webpack.config.js",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bananabread08/library.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bananabread08/library/issues"
+  },
+  "homepage": "https://github.com/bananabread08/library#readme",
+  "devDependencies": {
+    "css-loader": "^6.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
