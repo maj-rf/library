@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "The Library Project for TOP",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "test": "jest",
     "watch": "webpack --watch",
