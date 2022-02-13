@@ -74,6 +74,21 @@ nav {
   .fa-book {
     margin-right: 0.2em;
   }
+  .user-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    transform: scale(0.6);
+    border-radius: 10em 10em;
+  }
+
+  .hidden {
+    display: none;
+  }
 }
 
 main {

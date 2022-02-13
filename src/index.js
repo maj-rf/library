@@ -2,56 +2,75 @@ import './styles/style.css';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
+  signInWithPopup,
   GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  onAuthStateChanged,
+  signOut,
 } from 'firebase/auth';
-//import { getAnalytics } from "firebase/analytics";
+import { getFirebaseConfig } from './firebase-config';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyAy1TwID5BplRBJAkuOfVccX_mxXd4O_eg',
-  authDomain: 'ilib-b98ff.firebaseapp.com',
-  databaseURL:
-    'https://ilib-b98ff-default-rtdb.asia-southeast1.firebasedatabase.app',
-  projectId: 'ilib-b98ff',
-  storageBucket: 'ilib-b98ff.appspot.com',
-  messagingSenderId: '1026965389138',
-  appId: '1:1026965389138:web:b518124d145f7cf668848b',
-  measurementId: 'G-Z3KYF8MBZ8',
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
-
-// AUTH
-const logInBtn = document.querySelector('.logInBtn');
-const logOutBtn = document.querySelector('.logOutBtn');
+const app = initializeApp(getFirebaseConfig());
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+initFirebaseAuth();
 
-getRedirectResult(auth)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access Google APIs.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
+const picElement = document.querySelector('.profile-pic');
 
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
+async function signIn() {
+  // Sign in Firebase using popup auth and Google as the identity provider.
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(auth, provider);
+}
 
-logInBtn.addEventListener('click', (e) => signInWithRedirect(auth, provider));
+function signOutUser() {
+  // Sign out of Firebase.
+  signOut(auth);
+}
+
+function initFirebaseAuth() {
+  // Listen to auth state changes.
+  onAuthStateChanged(auth, authStateObserver);
+}
+
+// Returns the signed-in user's profile Pic URL.
+function getProfilePicUrl() {
+  return auth.currentUser.photoURL || '/images/profile_placeholder.png';
+}
+
+// Returns the signed-in user's display name.
+function getUserName() {
+  return auth.currentUser.displayName;
+}
+
+// Adds a size to Google Profile pics URLs.
+function addSizeToGoogleProfilePic(url) {
+  if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
+    return url + '?sz=150';
+  }
+  return url;
+}
+
+function authStateObserver(user) {
+  if (user) {
+    // User is signed in!
+    // Get the signed-in user's profile pic and name.
+    const profilePicUrl = getProfilePicUrl();
+    const userName = getUserName();
+    picElement.style.backgroundImage =
+      'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
+    logIn.classList.add('hidden');
+    logOut.classList.remove('hidden');
+    picElement.classList.remove('hidden');
+  } else {
+    logIn.classList.remove('hidden');
+    logOut.classList.add('hidden');
+    picElement.classList.add('hidden');
+  }
+}
+
+const logIn = document.querySelector('.logInBtn');
+const logOut = document.querySelector('.logOutBtn');
+logIn.addEventListener('click', signIn);
+logOut.addEventListener('click', signOutUser);
 
 class Book {
   constructor(title, author, pages, readStatus) {
