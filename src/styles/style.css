@@ -52,8 +52,6 @@ nav {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
   -webkit-box-shadow: 0px 15px 10px -15px #111;
           box-shadow: 0px 15px 10px -15px #111;
 }
@@ -65,29 +63,6 @@ nav h1 {
 
 nav .fa-book {
   margin-right: 0.2em;
-}
-
-nav .user-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-nav .profile-pic {
-  width: 100px;
-  height: 100px;
-  -webkit-transform: scale(0.6);
-          transform: scale(0.6);
-  border-radius: 10em 10em;
-}
-
-nav .hidden {
-  display: none;
 }
 
 main {

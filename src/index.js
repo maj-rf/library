@@ -1,76 +1,13 @@
 import './styles/style.css';
 import { initializeApp } from 'firebase/app';
 import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signOut,
-} from 'firebase/auth';
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  addDoc,
+} from 'firebase/firestore';
 import { getFirebaseConfig } from './firebase-config';
-
-const app = initializeApp(getFirebaseConfig());
-const auth = getAuth(app);
-initFirebaseAuth();
-
-const picElement = document.querySelector('.profile-pic');
-
-async function signIn() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider);
-}
-
-function signOutUser() {
-  // Sign out of Firebase.
-  signOut(auth);
-}
-
-function initFirebaseAuth() {
-  // Listen to auth state changes.
-  onAuthStateChanged(auth, authStateObserver);
-}
-
-// Returns the signed-in user's profile Pic URL.
-function getProfilePicUrl() {
-  return auth.currentUser.photoURL || '/images/profile_placeholder.png';
-}
-
-// Returns the signed-in user's display name.
-function getUserName() {
-  return auth.currentUser.displayName;
-}
-
-// Adds a size to Google Profile pics URLs.
-function addSizeToGoogleProfilePic(url) {
-  if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
-    return url + '?sz=150';
-  }
-  return url;
-}
-
-function authStateObserver(user) {
-  if (user) {
-    // User is signed in!
-    // Get the signed-in user's profile pic and name.
-    const profilePicUrl = getProfilePicUrl();
-    const userName = getUserName();
-    picElement.style.backgroundImage =
-      'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
-    logIn.classList.add('hidden');
-    logOut.classList.remove('hidden');
-    picElement.classList.remove('hidden');
-  } else {
-    logIn.classList.remove('hidden');
-    logOut.classList.add('hidden');
-    picElement.classList.add('hidden');
-  }
-}
-
-const logIn = document.querySelector('.logInBtn');
-const logOut = document.querySelector('.logOutBtn');
-logIn.addEventListener('click', signIn);
-logOut.addEventListener('click', signOutUser);
 
 class Book {
   constructor(title, author, pages, readStatus) {
@@ -85,8 +22,49 @@ class Book {
   }
 }
 
+// FIREBASE INIT
+initializeApp(getFirebaseConfig());
+
+// INIT SERVICES
+const db = getFirestore();
+const libraryRef = collection(db, 'library');
+
+// FETCH DATA
 let myLibrary = [];
-const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
+getDocs(libraryRef)
+  .then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      myLibrary.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(myLibrary);
+    renderLibrary(myLibrary);
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+const bookConverter = {
+  toFirestore: (book) => {
+    return {
+      title: book.title,
+      author: book.author,
+      pages: book.pages,
+      id: book.id,
+    };
+  },
+  fromFirestore: (snapshot, options) => {
+    const data = snapshot.data(options);
+    return new Book(data.title, data.author, data.pages, data.id);
+  },
+};
+
+async function addBookToStore(obj) {
+  const docRef = collection(db, 'library').withConverter(bookConverter);
+  await addDoc(docRef, new Book(obj.title, obj.author, obj.pages, obj.id));
+  console.log(docRef);
+  //console.log(bookRef);
+}
+
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
 const open = document.querySelector('.open-button');
@@ -103,11 +81,11 @@ function renderLibrary(currentLibrary) {
     const pageNode = document.createElement('p');
     const deleteNode = document.createElement('button');
     newBookNode.classList.add('book');
+    newBookNode.id = book.id;
     nameNode.classList.add('name');
     pageNode.classList.add('page');
     checkbox.setAttribute('type', 'checkbox');
     checkbox.classList.add('book-checker');
-    checkbox.setAttribute('id', book.id);
     nameNode.textContent = `${book.title} by ${book.author}`;
     pageNode.textContent = `${book.pages} pgs`;
     checkbox.checked = book.readStatus;
@@ -115,11 +93,10 @@ function renderLibrary(currentLibrary) {
       ? newBookNode.classList.add('strike')
       : newBookNode.classList.remove('strike');
     deleteNode.textContent = 'X';
-    deleteNode.id = book.id;
+    //deleteNode.id = book.id;
     newBookNode.append(checkbox, nameNode, pageNode, deleteNode);
     bookList.append(newBookNode);
   });
-  // booksCount.textContent = `Books: ${currentLibrary.length}`;
   if (myLibrary.length === 0) {
     const sign = document.createElement('h3');
     bookList.append((sign.textContent = 'No Books to show.'));
@@ -139,6 +116,7 @@ function addBooks(e) {
     return;
   }
   const newBook = new Book(title, author, pages, status);
+  addBookToStore(newBook);
   myLibrary.push(newBook);
   renderLibrary(myLibrary);
   successNode.style.display = 'block';
@@ -149,18 +127,20 @@ function updateLibrary(e) {
   const parent = e.target.parentNode;
   const elementType = e.target.tagName.toLowerCase();
   if (elementType === 'button') {
-    myLibrary = myLibrary.filter((book) => book.id !== e.target.id);
+    myLibrary = myLibrary.filter((book) => book.id !== parent.id);
     renderLibrary(myLibrary);
   }
   if (elementType === 'input') {
     for (const book of myLibrary) {
-      if (book.id === e.target.id) {
-        myLibrary[myLibrary.indexOf(book)].updateReadStatus();
+      if (book.id === parent.id) {
+        book.readStatus = !book.readStatus;
       }
     }
     e.target.checked === true
       ? parent.classList.add('strike')
       : parent.classList.remove('strike');
+
+    console.log(myLibrary);
   }
 }
 
@@ -172,8 +152,11 @@ function closeForm() {
   document.querySelector('.modal-container').style.display = 'none';
 }
 
-myLibrary.push(defaultBook);
+// init
+//myLibrary.push(defaultBook);
 renderLibrary(myLibrary);
+
+// EVENTS
 form.addEventListener('submit', addBooks);
 form.addEventListener(
   'click',
