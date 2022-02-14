@@ -49,12 +49,19 @@ const bookConverter = {
       title: book.title,
       author: book.author,
       pages: book.pages,
+      readStatus: book.readStatus,
       id: book.id,
     };
   },
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options);
-    return new Book(data.title, data.author, data.pages, data.id);
+    return new Book(
+      data.title,
+      data.author,
+      data.pages,
+      data.readStatus,
+      data.id
+    );
   },
 };
 
@@ -133,7 +140,7 @@ function updateLibrary(e) {
   if (elementType === 'input') {
     for (const book of myLibrary) {
       if (book.id === parent.id) {
-        book.readStatus = !book.readStatus;
+        book.updateReadStatus();
       }
     }
     e.target.checked === true
