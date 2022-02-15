@@ -5,7 +5,8 @@ import {
   collection,
   getDocs,
   doc,
-  addDoc,
+  setDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { getFirebaseConfig } from './firebase-config';
 
@@ -31,12 +32,15 @@ const libraryRef = collection(db, 'library');
 
 // FETCH DATA
 let myLibrary = [];
+
 getDocs(libraryRef)
   .then((snapshot) => {
     snapshot.docs.forEach((doc) => {
-      myLibrary.push({ ...doc.data(), id: doc.id });
+      myLibrary.push({
+        ...doc.data(),
+        id: doc.id,
+      });
     });
-    console.log(myLibrary);
     renderLibrary(myLibrary);
   })
   .catch((err) => {
@@ -65,12 +69,25 @@ const bookConverter = {
   },
 };
 
+// CREATE OR DELETE DATA
 async function addBookToStore(obj) {
-  const docRef = collection(db, 'library').withConverter(bookConverter);
-  await addDoc(docRef, new Book(obj.title, obj.author, obj.pages, obj.id));
-  console.log(docRef);
-  //console.log(bookRef);
+  const docRef = doc(db, 'library', `${obj.id}`).withConverter(bookConverter);
+  await setDoc(
+    docRef,
+    new Book(obj.title, obj.author, obj.pages, obj.readStatus, obj.id)
+  );
 }
+
+async function deleteBookFromStore(bookID) {
+  await deleteDoc(doc(db, 'library', bookID));
+}
+
+// async function updateBookFromStore(book) {
+//   console.log(book);
+//   let status = !book.readStatus;
+//   const ref = doc(db, 'library', book.id);
+//   await updateDoc(ref, { readStatus: status });
+// }
 
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
@@ -135,12 +152,13 @@ function updateLibrary(e) {
   const elementType = e.target.tagName.toLowerCase();
   if (elementType === 'button') {
     myLibrary = myLibrary.filter((book) => book.id !== parent.id);
+    deleteBookFromStore(parent.id);
     renderLibrary(myLibrary);
   }
   if (elementType === 'input') {
     for (const book of myLibrary) {
       if (book.id === parent.id) {
-        book.updateReadStatus();
+        book.status = !book.status; //updateReadStatus not working hmmmm
       }
     }
     e.target.checked === true
@@ -158,10 +176,6 @@ function openForm() {
 function closeForm() {
   document.querySelector('.modal-container').style.display = 'none';
 }
-
-// init
-//myLibrary.push(defaultBook);
-renderLibrary(myLibrary);
 
 // EVENTS
 form.addEventListener('submit', addBooks);
