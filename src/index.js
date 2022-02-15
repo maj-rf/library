@@ -7,6 +7,7 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { getFirebaseConfig } from './firebase-config';
 
@@ -82,12 +83,12 @@ async function deleteBookFromStore(bookID) {
   await deleteDoc(doc(db, 'library', bookID));
 }
 
-// async function updateBookFromStore(book) {
-//   console.log(book);
-//   let status = !book.readStatus;
-//   const ref = doc(db, 'library', book.id);
-//   await updateDoc(ref, { readStatus: status });
-// }
+async function updateBookFromStore(book) {
+  console.log(book);
+  let status = !book.readStatus;
+  const ref = doc(db, 'library', `${book.id}`);
+  await updateDoc(ref, { readStatus: status });
+}
 
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
@@ -158,7 +159,8 @@ function updateLibrary(e) {
   if (elementType === 'input') {
     for (const book of myLibrary) {
       if (book.id === parent.id) {
-        book.status = !book.status; //updateReadStatus not working hmmmm
+        book.readStatus = !book.readStatus; //updateReadStatus not working hmmmm
+        updateBookFromStore(book);
       }
     }
     e.target.checked === true
