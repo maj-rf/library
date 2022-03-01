@@ -8,13 +8,14 @@ class Book {
     this.readStatus = readStatus;
     this.id = title.slice(0, 3).toLowerCase() + pages;
   }
-  updateReadStatus() {
-    this.readStatus = !this.readStatus;
-  }
 }
 
-let myLibrary = [];
-const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
+Book.prototype.updateReadStatus = function () {
+  this.readStatus = !this.readStatus;
+};
+
+let myLibrary = JSON.parse(localStorage.getItem('library')) || [];
+//const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
 const form = document.querySelector('.modal');
 const bookList = document.querySelector('.book-list');
 const booksCount = document.querySelector('.count');
@@ -22,6 +23,7 @@ const open = document.querySelector('.open-button');
 const close = document.querySelector('.cancel');
 
 function renderLibrary(currentLibrary) {
+  console.log(currentLibrary);
   while (bookList.firstChild) {
     bookList.removeChild(bookList.firstChild);
   }
@@ -69,6 +71,7 @@ function addBooks(e) {
   }
   const newBook = new Book(title, author, pages, status);
   myLibrary.push(newBook);
+  localStorage.setItem('library', JSON.stringify(myLibrary));
   renderLibrary(myLibrary);
   successNode.style.display = 'block';
   form.reset();
@@ -79,12 +82,14 @@ function updateLibrary(e) {
   const elementType = e.target.tagName.toLowerCase();
   if (elementType === 'button') {
     myLibrary = myLibrary.filter((book) => book.id !== e.target.id);
+    localStorage.setItem('library', JSON.stringify(myLibrary));
     renderLibrary(myLibrary);
   }
   if (elementType === 'input') {
-    for (const book of myLibrary) {
+    for (let book of myLibrary) {
       if (book.id === e.target.id) {
-        myLibrary[myLibrary.indexOf(book)].updateReadStatus();
+        book.readStatus = !book.readStatus;
+        localStorage.setItem('library', JSON.stringify(myLibrary));
       }
     }
     e.target.checked === true
@@ -101,8 +106,8 @@ function closeForm() {
   document.querySelector('.modal-container').style.display = 'none';
 }
 
-myLibrary.push(defaultBook);
-renderLibrary(myLibrary);
+renderLibrary(myLibrary); //init
+
 form.addEventListener('submit', addBooks);
 form.addEventListener(
   'click',
