@@ -11,6 +11,7 @@ class Book {
 }
 
 Book.prototype.updateReadStatus = function () {
+  //not working
   this.readStatus = !this.readStatus;
 };
 
@@ -23,7 +24,7 @@ const open = document.querySelector('.open-button');
 const close = document.querySelector('.cancel');
 
 function renderLibrary(currentLibrary) {
-  console.log(currentLibrary);
+  localStorage.setItem('library', JSON.stringify(currentLibrary));
   while (bookList.firstChild) {
     bookList.removeChild(bookList.firstChild);
   }
@@ -71,7 +72,6 @@ function addBooks(e) {
   }
   const newBook = new Book(title, author, pages, status);
   myLibrary.push(newBook);
-  localStorage.setItem('library', JSON.stringify(myLibrary));
   renderLibrary(myLibrary);
   successNode.style.display = 'block';
   form.reset();
@@ -82,7 +82,6 @@ function updateLibrary(e) {
   const elementType = e.target.tagName.toLowerCase();
   if (elementType === 'button') {
     myLibrary = myLibrary.filter((book) => book.id !== e.target.id);
-    localStorage.setItem('library', JSON.stringify(myLibrary));
     renderLibrary(myLibrary);
   }
   if (elementType === 'input') {
