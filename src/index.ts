@@ -1,7 +1,28 @@
 import './styles/style.css';
 
+interface BookType {
+  title: string;
+  author: string;
+  pages: number;
+  readStatus: boolean;
+  id: string;
+  updateReadStatus: () => boolean;
+}
+
 class Book {
-  constructor(title, author, pages, readStatus) {
+  title: string;
+  author: string;
+  pages: number;
+  readStatus: boolean;
+  id: string;
+  updateReadStatus: () => boolean;
+
+  constructor(
+    title: string,
+    author: string,
+    pages: number,
+    readStatus: boolean
+  ) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -12,18 +33,18 @@ class Book {
 
 Book.prototype.updateReadStatus = function () {
   //not working
-  this.readStatus = !this.readStatus;
+  return (this.readStatus = !this.readStatus);
 };
 
-let myLibrary = JSON.parse(localStorage.getItem('library')) || [];
+let myLibrary: BookType[] = JSON.parse(localStorage.getItem('library')) || [];
 //const defaultBook = new Book('Noli Me Tangere', 'Dr. Jose Rizal', 123, true);
-const form = document.querySelector('.modal');
+const form = document.querySelector('.modal') as HTMLFormElement;
 const bookList = document.querySelector('.book-list');
 const booksCount = document.querySelector('.count');
 const open = document.querySelector('.open-button');
 const close = document.querySelector('.cancel');
 
-function renderLibrary(currentLibrary) {
+function renderLibrary(currentLibrary: BookType[]) {
   localStorage.setItem('library', JSON.stringify(currentLibrary));
   while (bookList.firstChild) {
     bookList.removeChild(bookList.firstChild);
@@ -58,26 +79,27 @@ function renderLibrary(currentLibrary) {
   }
 }
 
-function addBooks(e) {
+function addBooks(e: any) {
   e.preventDefault();
-  const successNode = document.querySelector('.success-msg');
-  const title = document.getElementById('title').value;
-  const author = document.getElementById('author').value;
-  const pages = document.getElementById('pages').value;
-  const status = document.getElementById('read-status').checked;
+  const successNode = document.querySelector('.success-msg') as HTMLElement;
+  const title = (document.getElementById('title') as HTMLInputElement).value;
+  const author = (document.getElementById('author') as HTMLInputElement).value;
+  const pages = (document.getElementById('pages') as HTMLInputElement).value;
+  const status = (document.getElementById('read-status') as HTMLInputElement)
+    .checked;
 
   if (title.length === 0 || author.length === 0 || pages.length === 0) {
     alert('Please, fill all the fields');
     return;
   }
-  const newBook = new Book(title, author, pages, status);
+  const newBook: BookType = new Book(title, author, parseInt(pages), status);
   myLibrary.push(newBook);
   renderLibrary(myLibrary);
   successNode.style.display = 'block';
   form.reset();
 }
 
-function updateLibrary(e) {
+function updateLibrary(e: any) {
   const parent = e.target.parentNode;
   const elementType = e.target.tagName.toLowerCase();
   if (elementType === 'button') {
@@ -98,11 +120,13 @@ function updateLibrary(e) {
 }
 
 function openForm() {
-  document.querySelector('.modal-container').style.display = 'flex';
+  (document.querySelector('.modal-container') as HTMLElement).style.display =
+    'flex';
 }
 
 function closeForm() {
-  document.querySelector('.modal-container').style.display = 'none';
+  (document.querySelector('.modal-container') as HTMLElement).style.display =
+    'none';
 }
 
 renderLibrary(myLibrary); //init
@@ -110,7 +134,9 @@ renderLibrary(myLibrary); //init
 form.addEventListener('submit', addBooks);
 form.addEventListener(
   'click',
-  () => (document.querySelector('.success-msg').style.display = 'none')
+  () =>
+    ((document.querySelector('.success-msg') as HTMLElement).style.display =
+      'none')
 );
 bookList.addEventListener('click', updateLibrary);
 open.addEventListener('click', openForm);
